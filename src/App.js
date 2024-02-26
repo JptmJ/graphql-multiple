@@ -1,24 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import { ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache } from '@apollo/client';
+import FirstMethod from './pages/first_method.js';
+import SecondMethod from './pages/second_method.js';
+import ThirdMethod from './pages/third_method.js';
+
+const client = new ApolloClient({
+  uri: 'https://graphql.anilist.co',
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <FirstMethod />
+        <SecondMethod />
+        <ThirdMethod />
+      </div>
+    </ApolloProvider>
   );
 }
 

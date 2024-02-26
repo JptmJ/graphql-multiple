@@ -68,3 +68,15 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### `npm install @apollo/client@latest
+
+### `npm install axios
+
+### `npm install graphql-request
+
+Apollo Client is well-suited for medium to large-scale applications where advanced features like caching, real-time updates, and local state management are crucial.
+
+Fetch Method is suitable for smaller to medium-sized projects or situations where you want more control over the network layer and prefer a minimalistic approach.
+
+Axios is a good choice when you have a mixed API environment with both REST and GraphQL endpoints or when your project already relies heavily on Axios for other HTTP tasks.
