@@ -1,66 +1,68 @@
-import { useEffect, useState } from 'react';
-import { request, gql } from 'graphql-request';
+import React, { useEffect, useState } from "react";
+import { request, gql } from "graphql-request";
 
 function SecondMethod() {
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const query = gql`
-        {
-          Page {
-            media {
-              title {
-                english
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const query = gql`
+          {
+            Page {
+              media {
+                title {
+                  english
+                }
+                description
               }
-              description
             }
           }
-        }`;
-                const response = await request('https://graphql.anilist.co', query);
+        `;
+        const response = await request("https://graphql.anilist.co", query);
 
-                setData(response);
-                setLoading(false);
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
+        setData(response);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    };
 
-        fetchData();
-    }, []);
+    fetchData();
+  }, []);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
-    return (
-        <div className="App">
-            <h1>Fetch Method</h1>
-            {loading && <p>Loading...</p>}
-            {error && <p>Error: {error.message}</p>}
-            {data && (
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {data.Page.media.map((media) => (
-                            <tr key={media.title?.english || "Unknown"}>
-                                <td>{media.title?.english || "Unknown"}</td>
-                                <td>{media.description}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
-    );
+  return (
+    <div>
+      <h1>Fetch Data</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+      {data ? (
+        data.Page.media.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.Page.media.slice(0, 10).map((media, index) => (
+                <tr key={index}>
+                  <td>{media.title?.english || `No Title ${index}`}</td>
+                  <td>{media?.description || "No Description"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>No data available.</p>
+        )
+      ) : null}
+    </div>
+  );
 }
 
 export default SecondMethod;

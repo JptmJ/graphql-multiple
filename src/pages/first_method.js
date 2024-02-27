@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 function FirstMethod() {
   const [data, setData] = useState(null);
@@ -9,10 +9,8 @@ function FirstMethod() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          'https://graphql.anilist.co',
-          {
-            query: `
+        const response = await axios.post("https://graphql.anilist.co", {
+          query: `
               {
                 Page {
                   media {
@@ -24,8 +22,7 @@ function FirstMethod() {
                 }
               }
             `,
-          }
-        );
+        });
 
         setData(response.data);
         setLoading(false);
@@ -39,7 +36,7 @@ function FirstMethod() {
   }, []);
 
   return (
-    <div className="App">
+    <div>
       <h1>Axios Data</h1>
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
@@ -53,10 +50,10 @@ function FirstMethod() {
               </tr>
             </thead>
             <tbody>
-              {data.data.Page.media.map((media) => (
-                <tr key={media.title?.english || 'Unknown'}>
-                  <td>{media.title?.english || 'Unknown'}</td>
-                  <td>{media.description}</td>
+              {data.data.Page.media.slice(0, 10).map((media, index) => (
+                <tr key={index}>
+                  <td>{media.title?.english || `No Title ${index}`}</td>
+                  <td>{media?.description || "No Description"}</td>
                 </tr>
               ))}
             </tbody>
